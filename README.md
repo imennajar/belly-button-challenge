@@ -274,7 +274,9 @@ d3.json(url).then(function(data) {
 });
 ```
 #### Charts
-
+<img src='newplot (1).png' style ='width:700px;height:300px'/> 
+<img src='newplot (2).png' style ='width:700px;height:300px'/> 
+<img src=newplot.png' style ='width:700px;height:300px'/> 
 
 #### Bonus:
 Add mouse events: mouseenter & mouseleave
