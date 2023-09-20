@@ -36,6 +36,7 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
 
 ### Tools:
 
+- Visual Studio Code (VSCode): is a free, open-source code editor developed by Microsoft.
 - Javascript: is a  programming language,  primarily used for web development.
 
 - HTML: is the standard markup language for documents designed to be displayed in a web browser.
