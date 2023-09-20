@@ -2,7 +2,7 @@
 const url = 'https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json';
 
 // Function to update bar chart
-function barchart(samp) {
+function barchart(samp,id) {
   let outid10 = samp.otu_ids.slice(0, 10);
   let sample10 = samp.sample_values.slice(0, 10);
   let labels10 = samp.otu_labels.slice(0, 10);
@@ -18,7 +18,8 @@ function barchart(samp) {
   let barch = [bartrace];
 
   let barlayout = {
-    title: 'Top 10 OTUs',
+    title: {text:`Top 10 OTUs for ID ${id}`,
+            font: { color: "red", size: 24 }},
     height: 400
   };
  // Create the bar chart
@@ -26,7 +27,7 @@ function barchart(samp) {
 }
 
 // Function to update bubble chart
-function bubblechart(samp) {
+function bubblechart(samp,id) {
   let bubbletrace = {
     type: 'scatter',
     mode: 'markers',
@@ -38,28 +39,30 @@ function bubblechart(samp) {
       color: samp.otu_ids,
       colorscale: 'Viridis',
       opacity: 0.5,
+    
     },
   };
 
   let bubblech = [bubbletrace];
 
   let bubblelayout = {
-    title: 'Bubble Chart',
-    xaxis: { title: 'OTU IDs' },
-    yaxis: { title: 'Sample Values' },
+    title: {text:`Samples for ID ${id}`, 
+    font: { color: "red", size: 24 } } ,
+    width: 1180
+
   };
  // Create the bubble chart
   Plotly.newPlot('bubble', bubblech, bubblelayout);
 }
 
 // Function to update gauge chart
-function gaugechart(wfreq) {
+function gaugechart(wfreq,id) {
   let gaugetrace = {
     type: "indicator",
     mode: "gauge+number+delta",
     value: wfreq,
     title: {
-      text: "Belly Button Washing Frequency<br>Scrubs per Week",
+      text: `Belly Button Washing Frequency<br>Scrubs per Week  for ID ${id}`, 
       font: { color: "red", size: 24 },
       delta: { reference: 9, increasing: { color: "RebeccaPurple" } }
     },
@@ -108,12 +111,12 @@ function optionChanged(selectedvalue) {
     displaymetadata(selectedvalue, data);
     // Get the data for the bar and bubble chart
     let sampdata = data.samples.find(sample => sample.id === selectedvalue);
-    barchart(sampdata);
-    bubblechart(sampdata);
+    barchart(sampdata,selectedvalue);
+    bubblechart(sampdata,selectedvalue);
     // Get the data for the gauge chart
-    let individualData = data.metadata.find(metadata => metadata.id == selectedvalue); 
-    let wfreq = individualData.wfreq;
-    gaugechart(wfreq);
+    let indata = data.metadata.find(metadata => metadata.id == selectedvalue); 
+    let wfreq = indata.wfreq;
+    gaugechart(wfreq,selectedvalue);
   });
 }
 
@@ -132,19 +135,107 @@ function displaymetadata(indid, data) {
 // Populate the dropdown from the JSON data
 d3.json(url).then(function(data) {
   let names = data.names;
+
+  // Select the first item from the list of names
+  let initialitem = names[0];
+
+  // Append items to the dropdown
   names.forEach((name) => {
     d3.select("#selDataset").append("option").text(name);
   });
 
-  // Initial selected item 
-  let initialitem = "940";
-  displaymetadata(initialitem, data);
+  // Set the selected item in the dropdown to the first item
+  d3.select("#selDataset").property("value", initialitem);
 
-  // Update the charts for the initial value
-  let initialsamp = data.samples.find(sample => sample.id === initialitem);
-  barchart(initialsamp);
-  bubblechart(initialsamp);
-  let individualData = data.metadata.find(metadata => metadata.id == initialitem); 
-  let wfreq = individualData.wfreq; 
-  gaugechart(wfreq);
+  // Call the optionChanged function to update the charts and metadata
+  optionChanged(initialitem);
+});
+
+
+// Add events mousenter and mouseleave to display the kind of chart 
+// Get the div element and add a mouseenter event listener
+let barDiv = document.getElementById("bar");
+let chartTitle = "Bar Chart Top 10 OTUs";
+
+barDiv.addEventListener("mouseenter", function() {
+  // Create a text element to display the chart title
+  let titleElement = document.createElement("p");
+  titleElement.textContent = chartTitle;
+  
+  // Style the text element to display it on top
+  titleElement.style.position = "absolute";
+  titleElement.style.top = "0"; 
+  titleElement.style.left = "0"; 
+  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  titleElement.style.color = "white";
+  titleElement.style.padding = "5px";
+  titleElement.style.borderRadius = "5px";
+  
+  // Append the text element to the div
+  barDiv.appendChild(titleElement);
+});
+
+// Add a mouseleave event listener to remove the text when the mouse leaves
+barDiv.addEventListener("mouseleave", function() {
+  let titleElement = barDiv.querySelector("p");
+  if (titleElement) {
+    barDiv.removeChild(titleElement);
+  }
+});
+let bubbleDiv = document.getElementById("bubble");
+let bubbleChartTitle = "Bubble Chart";
+
+bubbleDiv.addEventListener("mouseenter", function() {
+  // Create a text element to display the chart title
+  let titleElement = document.createElement("p");
+  titleElement.textContent = bubbleChartTitle;
+
+  // Style the text element to display it on top
+  titleElement.style.position = "absolute";
+  titleElement.style.top = "0"; 
+  titleElement.style.left = "0"; 
+  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  titleElement.style.color = "white";
+  titleElement.style.padding = "5px";
+  titleElement.style.borderRadius = "5px";
+
+  // Append the text element to the div
+  bubbleDiv.appendChild(titleElement);
+});
+
+// Add a mouseleave event listener to remove the text when the mouse leaves
+bubbleDiv.addEventListener("mouseleave", function() {
+  let titleElement = bubbleDiv.querySelector("p");
+  if (titleElement) {
+    bubbleDiv.removeChild(titleElement);
+  }
+});
+// Get the div element and add a mouseenter event listener for the gauge chart
+let gaugeDiv = document.getElementById("gauge");
+let gaugeChartTitle = "Gauge Chart";
+
+gaugeDiv.addEventListener("mouseenter", function() {
+  // Create a text element to display the chart title
+  const titleElement = document.createElement("p");
+  titleElement.textContent = gaugeChartTitle;
+
+  // Style the text element to display it on top
+  titleElement.style.position = "absolute";
+  titleElement.style.top = "0"; 
+  titleElement.style.left = "0"; 
+  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+  titleElement.style.color = "white";
+  titleElement.style.padding = "5px";
+  titleElement.style.borderRadius = "5px";
+
+  // Append the text element to the div
+  gaugeDiv.appendChild(titleElement);
+});
+
+// Add a mouseleave event listener to remove the text when the mouse leaves
+gaugeDiv.addEventListener("mouseleave", function() {
+ let  titleElement = gaugeDiv.querySelector("p");
+  if (titleElement) {
+    gaugeDiv.removeChild(titleElement);
+  }
 });
