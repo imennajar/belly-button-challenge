@@ -152,90 +152,87 @@ d3.json(url).then(function(data) {
 });
 
 
-// Add events mousenter and mouseleave to display the kind of chart 
+// Add events mousenter and mouseleave to display the type of chart 
+// Bar chart
 // Get the div element and add a mouseenter event listener
-let barDiv = document.getElementById("bar");
-let chartTitle = "Bar Chart Top 10 OTUs";
-
-barDiv.addEventListener("mouseenter", function() {
+let bardiv = document.getElementById("bar");
+bardiv.addEventListener("mouseenter", function() {
   // Create a text element to display the chart title
-  let titleElement = document.createElement("p");
-  titleElement.textContent = chartTitle;
-  
+  let title = document.createElement("p");
+  title.textContent = "Bar Chart Top 10 OTUs";
+
   // Style the text element to display it on top
-  titleElement.style.position = "absolute";
-  titleElement.style.top = "0"; 
-  titleElement.style.left = "0"; 
-  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-  titleElement.style.color = "white";
-  titleElement.style.padding = "5px";
-  titleElement.style.borderRadius = "5px";
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "yellow";
   
   // Append the text element to the div
-  barDiv.appendChild(titleElement);
+  bardiv.appendChild(title);
 });
 
 // Add a mouseleave event listener to remove the text when the mouse leaves
-barDiv.addEventListener("mouseleave", function() {
-  let titleElement = barDiv.querySelector("p");
-  if (titleElement) {
-    barDiv.removeChild(titleElement);
-  }
+bardiv.addEventListener("mouseleave", function() {
+  let title = bardiv.querySelector("p");
+  bardiv.removeChild(title);
+ 
 });
-let bubbleDiv = document.getElementById("bubble");
-let bubbleChartTitle = "Bubble Chart";
 
-bubbleDiv.addEventListener("mouseenter", function() {
+
+
+// Bubble chart
+// Get the div element and add a mouseenter event listener
+let bubblediv = document.getElementById("bubble");
+bubblediv.addEventListener("mouseenter", function() {
   // Create a text element to display the chart title
-  let titleElement = document.createElement("p");
-  titleElement.textContent = bubbleChartTitle;
+  let title = document.createElement("p");
+  title.textContent = "Bubble Chart";
 
   // Style the text element to display it on top
-  titleElement.style.position = "absolute";
-  titleElement.style.top = "0"; 
-  titleElement.style.left = "0"; 
-  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-  titleElement.style.color = "white";
-  titleElement.style.padding = "5px";
-  titleElement.style.borderRadius = "5px";
-
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "cyan";
+  
   // Append the text element to the div
-  bubbleDiv.appendChild(titleElement);
+  bubblediv.appendChild(title);
 });
 
 // Add a mouseleave event listener to remove the text when the mouse leaves
-bubbleDiv.addEventListener("mouseleave", function() {
-  let titleElement = bubbleDiv.querySelector("p");
-  if (titleElement) {
-    bubbleDiv.removeChild(titleElement);
-  }
+bubblediv.addEventListener("mouseleave", function() {
+  let title = bubblediv.querySelector("p");
+  bubblediv.removeChild(title);
+ 
 });
-// Get the div element and add a mouseenter event listener for the gauge chart
-let gaugeDiv = document.getElementById("gauge");
-let gaugeChartTitle = "Gauge Chart";
 
-gaugeDiv.addEventListener("mouseenter", function() {
+// Gauge chart
+// Get the div element and add a mouseenter event listener
+let gaugediv = document.getElementById("gauge");
+gaugediv.addEventListener("mouseenter", function() {
   // Create a text element to display the chart title
-  const titleElement = document.createElement("p");
-  titleElement.textContent = gaugeChartTitle;
+  let title = document.createElement("p");
+  title.textContent = "Gauge Chart";
 
   // Style the text element to display it on top
-  titleElement.style.position = "absolute";
-  titleElement.style.top = "0"; 
-  titleElement.style.left = "0"; 
-  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-  titleElement.style.color = "white";
-  titleElement.style.padding = "5px";
-  titleElement.style.borderRadius = "5px";
-
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "magenta";
+  
   // Append the text element to the div
-  gaugeDiv.appendChild(titleElement);
+  gaugediv.appendChild(title);
 });
 
 // Add a mouseleave event listener to remove the text when the mouse leaves
-gaugeDiv.addEventListener("mouseleave", function() {
- let  titleElement = gaugeDiv.querySelector("p");
-  if (titleElement) {
-    gaugeDiv.removeChild(titleElement);
-  }
+gaugediv.addEventListener("mouseleave", function() {
+  let title = gaugediv.querySelector("p");
+  gaugediv.removeChild(title);
+ 
 });
+
