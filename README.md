@@ -6,7 +6,7 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
 
 ## What we will learn from this project:
 
-- How to intereact between HTML and JavaScript code to creat a dynamic web applications
+- How to interact between HTML and JavaScript code to create a dynamic web application
 
 - How to retrieve data from a Json file (provided in URL link too: https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json)
 
@@ -22,22 +22,22 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
  
   - Use the D3 library to read in samples.json from the URL,
 
-  - Create a bubble chart that displays each sample,
+  - Create a bubble chart that displays each sample
 
-  - Display the sample metadata, i.e., an individual's demographic information,
+  - Display the sample metadata, i.e., an individual's demographic information
 
-  - Display each key-value pair from the metadata JSON object somewhere on the page,
+  - Display each key-value pair from the metadata JSON object somewhere on the page
 
-  - Update all the plots when a new sample is selected,
+  - Update all the plots when a new sample is selected
 
-  - Create a auge Chart to plot the weekly washing frequency of the individual (optional)
+  - Create a gauge Chart to plot the weekly washing frequency of the individual (optional)
 
  ## Program:
 
 ### Tools:
 
 - Visual Studio Code (VSCode): is a free, open-source code editor developed by Microsoft.
-- Javascript: is a  programming language,  primarily used for web development.
+- Javascript: is a programming language primarily used for web development.
 
 - HTML: is the standard markup language for documents designed to be displayed in a web browser.
 
@@ -49,7 +49,7 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
 
 ### Code:
 
-#### HTML:
+#### HTML: index.html
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -62,12 +62,12 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
     #gauge .gauge-axis text {
-      fill: white !important; /* Change to the desired text color */
+      fill: white !important; 
   }
     body {
         background-image: url('bacteria.jpg'); 
-        background-size: cover;
-        background-repeat: no-repeat; 
+        background-size: cover; 
+        background-repeat: no-repeat;
        
       }
 
@@ -79,11 +79,22 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12 jumbotron text-center">
+      <div class="col-md-12 jumbotron text-center"style="width: 1250px;background: linear-gradient(45deg, #f06, #9f6);background-size: 200% 200%; animation: gradientAnimation 5s linear infinite;">
         <h1>Belly Button Biodiversity Dashboard</h1>
         <p>Use the interactive charts below to explore the dataset</p>
       </div>
     </div>
+    <style>
+      /* Define the keyframes for the background animation */
+      @keyframes gradientAnimation {
+          0% {
+              background-position: 0% 50%;
+          }
+          100% {
+              background-position: 100% 50%;
+          }
+      }
+  </style>
     <div class="row">
       <div class="col-md-2">
         <div class="well">
@@ -115,11 +126,13 @@ Link to the website: https://robdunnlab.com/projects/belly-button-biodiversity/
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
  
+
 </body>
 
 </html>
+
 ```
-#### JavaScript:
+#### JavaScript: app.js
 ```
 // URL
 const url = 'https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json';
@@ -141,9 +154,10 @@ function barchart(samp,id) {
   let barch = [bartrace];
 
   let barlayout = {
-    title: {text:`Top 10 OTUs for ID ${id}`,
+    title: {text:`Top 10 OTUs: for ID ${id}`,
             font: { color: "red", size: 24 }},
-    height: 400
+    height: 400,
+    
   };
  // Create the bar chart
   Plotly.newPlot('bar', barch, barlayout);
@@ -160,8 +174,7 @@ function bubblechart(samp,id) {
     marker: {
       size: samp.sample_values,
       color: samp.otu_ids,
-      colorscale: 'Viridis',
-      opacity: 0.5,
+      colorscale: "Earth",
     
     },
   };
@@ -169,9 +182,11 @@ function bubblechart(samp,id) {
   let bubblech = [bubbletrace];
 
   let bubblelayout = {
-    title: {text:`Samples for ID ${id}`, 
+    title: {text:`Bacteria Cultures Per Sample: for ID ${id}`, 
     font: { color: "red", size: 24 } } ,
-    width: 1180
+    width: 1180,
+    xaxis: { title: "OTU ID" },
+    height:600
 
   };
  // Create the bubble chart
@@ -185,7 +200,7 @@ function gaugechart(wfreq,id) {
     mode: "gauge+number+delta",
     value: wfreq,
     title: {
-      text: `Belly Button Washing Frequency<br>Scrubs per Week  for ID ${id}`, 
+      text: `Belly Button Washing Frequency<br>Scrubs per Week:  for ID ${id}`, 
       font: { color: "red", size: 24 },
       delta: { reference: 9, increasing: { color: "RebeccaPurple" } }
     },
@@ -281,57 +296,93 @@ d3.json(url).then(function(data) {
 
 #### Bonus:
 Add mouse events: mouseenter & mouseleave
-Example:
-```
-// Add events mousenter and mouseleave to display the kind of chart 
-// Get the div element and add a mouseenter event listener
-let barDiv = document.getElementById("bar");
-let chartTitle = "Bar Chart Top 10 OTUs";
 
-barDiv.addEventListener("mouseenter", function() {
+```
+// Add events mousenter and mouseleave to display the type of chart 
+// Bar chart
+// Get the div element and add a mouseenter event listener
+let bardiv = document.getElementById("bar");
+bardiv.addEventListener("mouseenter", function() {
   // Create a text element to display the chart title
-  let titleElement = document.createElement("p");
-  titleElement.textContent = chartTitle;
-  
+  let title = document.createElement("p");
+  title.textContent = "Bar Chart Top 10 OTUs";
+
   // Style the text element to display it on top
-  titleElement.style.position = "absolute";
-  titleElement.style.top = "0"; 
-  titleElement.style.left = "0"; 
-  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-  titleElement.style.color = "white";
-  titleElement.style.padding = "5px";
-  titleElement.style.borderRadius = "5px";
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "yellow";
   
   // Append the text element to the div
-  barDiv.appendChild(titleElement);
+  bardiv.appendChild(title);
 });
 
 // Add a mouseleave event listener to remove the text when the mouse leaves
-barDiv.addEventListener("mouseleave", function() {
-  let titleElement = barDiv.querySelector("p");
-  if (titleElement) {
-    barDiv.removeChild(titleElement);
-  }
+bardiv.addEventListener("mouseleave", function() {
+  let title = bardiv.querySelector("p");
+  bardiv.removeChild(title);
+ 
 });
-let bubbleDiv = document.getElementById("bubble");
-let bubbleChartTitle = "Bubble Chart";
 
-bubbleDiv.addEventListener("mouseenter", function() {
+// Bubble chart
+// Get the div element and add a mouseenter event listener
+let bubblediv = document.getElementById("bubble");
+bubblediv.addEventListener("mouseenter", function() {
   // Create a text element to display the chart title
-  let titleElement = document.createElement("p");
-  titleElement.textContent = bubbleChartTitle;
+  let title = document.createElement("p");
+  title.textContent = "Bubble Chart";
 
   // Style the text element to display it on top
-  titleElement.style.position = "absolute";
-  titleElement.style.top = "0"; 
-  titleElement.style.left = "0"; 
-  titleElement.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-  titleElement.style.color = "white";
-  titleElement.style.padding = "5px";
-  titleElement.style.borderRadius = "5px";
-
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "cyan";
+  
   // Append the text element to the div
-  bubbleDiv.appendChild(titleElement);
+  bubblediv.appendChild(title);
 });
+
+// Add a mouseleave event listener to remove the text when the mouse leaves
+bubblediv.addEventListener("mouseleave", function() {
+  let title = bubblediv.querySelector("p");
+  bubblediv.removeChild(title);
+ 
+});
+
+// Gauge chart
+// Get the div element and add a mouseenter event listener
+let gaugediv = document.getElementById("gauge");
+gaugediv.addEventListener("mouseenter", function() {
+  // Create a text element to display the chart title
+  let title = document.createElement("p");
+  title.textContent = "Gauge Chart";
+
+  // Style the text element to display it on top
+  title.style.fontWeight = "bold";
+  title.style.fontStyle = "italic";
+  title.style.position = "absolute";
+  title.style.top = "0"; 
+  title.style.backgroundColor = "black";
+  title.style.color = "magenta";
+  
+  // Append the text element to the div
+  gaugediv.appendChild(title);
+});
+
+// Add a mouseleave event listener to remove the text when the mouse leaves
+gaugediv.addEventListener("mouseleave", function() {
+  let title = gaugediv.querySelector("p");
+  gaugediv.removeChild(title);
+ 
+});
+
+
 ```
-##### Supports: Slack AskBCS Learning Assistant
+##### Supports: 
+Slack AskBCS Learning Assistant
+https://www.makeuseof.com/animated-background-html-css/
+

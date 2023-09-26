@@ -18,9 +18,10 @@ function barchart(samp,id) {
   let barch = [bartrace];
 
   let barlayout = {
-    title: {text:`Top 10 OTUs for ID ${id}`,
+    title: {text:`Top 10 OTUs: for ID ${id}`,
             font: { color: "red", size: 24 }},
-    height: 400
+    height: 400,
+    
   };
  // Create the bar chart
   Plotly.newPlot('bar', barch, barlayout);
@@ -37,8 +38,7 @@ function bubblechart(samp,id) {
     marker: {
       size: samp.sample_values,
       color: samp.otu_ids,
-      colorscale: 'Viridis',
-      opacity: 0.5,
+      colorscale: "Earth",
     
     },
   };
@@ -46,9 +46,11 @@ function bubblechart(samp,id) {
   let bubblech = [bubbletrace];
 
   let bubblelayout = {
-    title: {text:`Samples for ID ${id}`, 
+    title: {text:`Bacteria Cultures Per Sample: for ID ${id}`, 
     font: { color: "red", size: 24 } } ,
-    width: 1180
+    width: 1180,
+    xaxis: { title: "OTU ID" },
+    height:600
 
   };
  // Create the bubble chart
@@ -62,7 +64,7 @@ function gaugechart(wfreq,id) {
     mode: "gauge+number+delta",
     value: wfreq,
     title: {
-      text: `Belly Button Washing Frequency<br>Scrubs per Week  for ID ${id}`, 
+      text: `Belly Button Washing Frequency<br>Scrubs per Week:  for ID ${id}`, 
       font: { color: "red", size: 24 },
       delta: { reference: 9, increasing: { color: "RebeccaPurple" } }
     },
@@ -179,8 +181,6 @@ bardiv.addEventListener("mouseleave", function() {
   bardiv.removeChild(title);
  
 });
-
-
 
 // Bubble chart
 // Get the div element and add a mouseenter event listener
